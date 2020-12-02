@@ -24,6 +24,7 @@
     "start-client": "react-scripts start",
     "build": "react-scripts build && (cd server && npm install)",
     "test": "react-scripts test",
+    "start": "serve -s build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
