@@ -1,0 +1,9 @@
+{
+    // "mongoURI" : "mongodb+srv://gagan:gagan@devconnect.tby1z.mongodb.net/test?retryWrites=true&w=majority",
+    "mongoURI" : "mongodb+srv://admin:admin@cluster0.o7pci.mongodb.net/kgtHomeWork?retryWrites=true&w=majority",
+    "jwtToken" : "mySecretToken",
+    "githubClientId" : "e3f15d2f86663f8b9437",
+    "githudSecret" : "67299a71435e3227531ee99582fa65fd40f9c29d"
+}
+
+// 'mongodb+srv://mngagan@gmail.com:Benetton2@@cluster0.o7pci.mongodb.net/kgtHomeWork?retryWrites=true&w=majority'
