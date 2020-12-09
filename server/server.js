@@ -1,5 +1,6 @@
 const express = require('express')
 const connectDB = require('./config/db')
+const path = require('path');
 
 const app = express()
 
@@ -7,7 +8,8 @@ const app = express()
 connectDB()
 
 // Init middleware
-app.use(express.static('../public'));
+const buildPath = path.join(__dirname, '..', 'build');
+app.use(express.static(buildPath));
 app.use(express.json({extended : false}))
 
 // app.get('/', (req, res) => {
