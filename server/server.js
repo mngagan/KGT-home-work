@@ -3,6 +3,7 @@ const connectDB = require('./config/db')
 const path = require('path');
 
 const app = express()
+var bodyParser = require('body-parser')
 
 // connect to db
 connectDB()
@@ -10,11 +11,14 @@ connectDB()
 // Init middleware
 const buildPath = path.join(__dirname, '..', 'build');
 app.use(express.static(buildPath));
-app.use(express.json({extended : false}))
+// app.use(express.json({extended : false}))
+// app.use(express.bodyParser({limit: '2mb'}))
+app.use(bodyParser.json({ limit: "1mb" }))
+app.use(bodyParser.urlencoded({ limit: "1mb", extended: true, parameterLimit: 50000 }))
 
 // app.get('/', (req, res) => {
 //     res.send('API RUNNING')
-// })
+// }) 
 
 // Define routes
 app.use('/api/users', require('./routes/api/users'))

@@ -74,7 +74,7 @@ export const ViewHW = () => {
                                     </sc.div>
                                     <sc.div className='col-8 col-md-9 col-sm-8 col-lg-9' id='keyLabel'>
                                         : {!data.anchroTag && !data.imageTag && data.value}
-                                        {data.anchroTag && data.value.length === '' && <a href={data.value} target="blank">open youtube</a>}
+                                        {data.anchroTag && <a href={data.value} target="blank">open youtube</a>}
                                         {data.imageTag && data.value !== 'false' && <ModalImage
                                             small={data.value}
                                             large={data.value}

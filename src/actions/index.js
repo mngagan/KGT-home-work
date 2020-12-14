@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 export const updateTest = () => async dispatch => {
-    console.log('in update test actions')
     // dispatch({
     //     type: 'UPDATE_TEST',
     //     payload: Date.now()
