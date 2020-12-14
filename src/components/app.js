@@ -17,17 +17,17 @@ import {
     Link
 } from "react-router-dom";
 const customStyles = {
-    content : {
-      top                   : '50%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      padding : '100px',
-      transform             : 'translate(-50%, -50%)',
-      border                : '0px'
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        padding: '0',
+        transform: 'translate(-50%, -50%)',
+        border: '0px'
     }
-  };
+};
 let allModes = ['default', 'dark', 'other1', 'other2', 'other3', 'other4', 'other5', 'other6', 'other7', 'other8']
 export default function App() {
     const [mode, setMode] = useState('default')
@@ -38,7 +38,6 @@ export default function App() {
             const value = localStorage.getItem('my-mode');
             if (value !== null) {
                 // We have data!
-                // console.log(value);
                 setMode(value)
             }
         } catch (error) {
@@ -55,12 +54,20 @@ export default function App() {
         // document
     }
     const checkUser = () => {
-        if(document.getElementById('pwdInput').value === '6565'){
+        if (document.getElementById('pwdInput').value === '6565') {
             setIsOpen(false)
             setPage(page === 'view' ? 'add' : 'view')
             return
         }
 
+    }
+    const leftButtonClick = () => {
+        if (page === 'view') {
+            setIsOpen(true)
+        }
+        else {
+            setPage('view')
+        }
     }
     return (
         <Provider store={store}>
@@ -91,7 +98,7 @@ export default function App() {
                 <a href="#" class="float" onClick={() => handleChangeMode()} style={{ backgroundColor: theme(mode).text }}>
                     <i class="fa fa-plus my-float"></i>
                 </a>
-                <a href="#" class="float-right" onClick={() => setIsOpen(true)} style={{ backgroundColor: theme(mode).text }}>
+                <a href="#" class="float-right" onClick={() => leftButtonClick()} style={{ backgroundColor: theme(mode).text }}>
                     <i class="fa fa-plus my-float1"></i>
                 </a>
                 {/* <button onClick = {() => {setIsOpen(true)}}>modal window</button> */}
@@ -104,13 +111,13 @@ export default function App() {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-                    <sc.div className = 'container'>
-                        <sc.div className = 'row'>
-                            <sc.input type = 'text' id = 'pwdInput' />
+                    <sc.div className='container'>
+                        <sc.div className='row'>
+                            <sc.input type='text' id='pwdInput' />
                         </sc.div>
-                        <sc.div className = 'row'>
-                            <button onClick = {checkUser}>Submit</button>
-                            <button onClick = {() => setIsOpen(false)}>Close</button>
+                        <sc.div className='row'>
+                            <button onClick={checkUser}>Submit</button>
+                            <button onClick={() => setIsOpen(false)}>Close</button>
                         </sc.div>
                     </sc.div>
                 </Modal>

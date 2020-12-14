@@ -43,11 +43,9 @@ const AddHW = (props) => {
         reader.onloadend = () => {
             // document.getElementById('myimg').src = reader.result
             setImageData(reader.result)
-            console.log('reader', reader.result)
         };
     }
     const uploadHomeWork = async () => {
-        console.log('in upload homework')
         // Axios.post('/api/homework/addHomeWork')
         if (!(topicName.length && imageData.length && updatedBy.length && memoryVerse.length)) {
             toastMsg({error : true, msg : 'Please fill all mandatory fields'})
@@ -61,7 +59,6 @@ const AddHW = (props) => {
         else {
             toastMsg({ error: true, msg: 'Failed, Please try again' })
         }
-        console.log('upload homwwork response', res)
     }
     return (
         <sc.div className='container'>
@@ -95,7 +92,7 @@ const AddHW = (props) => {
                 Date
                 <DatePicker
                     selected={date}
-                    onChange={date => { console.log(date); setDate(date) }}
+                    onChange={date => { setDate(date) }}
                     dateFormat="MMMM d, yyyy"
                 />
             </sc.div>

@@ -27,14 +27,11 @@ export const ViewHW = () => {
     const [date, setDate] = useState('')
 
     useEffect(() => {   // component did mount, call the service to show latest homework
-        console.log('in load for the first time')
         Axios.get('/api/homework/latest')
             .then(res => {
-                console.log('in fetch latest', res)
                 let response = res.data
                 if (response.success) {
                     let { name: topicName, images: imageUrl, youtubeLink: ytLink, updatedBy: uBy, description: memoryVerse, date: date1 } = response.data[0]
-                    console.log('in latest homework', response.data[0], topicName)
                     setTopicName(topicName)
                     setImages(imageUrl)
                     setYoutubeLink(ytLink)
