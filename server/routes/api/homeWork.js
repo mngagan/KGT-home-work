@@ -9,7 +9,6 @@ var fs = require('fs');
 router.get('/latest', async (req, res) => {
     try{
         let data =  await HomeWork.find({}).sort({date : -1}).limit(1)
-        // console.log('after fetching all data', data)
 
         // if(data.status === 200){
             res.send({success : true, data})
@@ -24,7 +23,6 @@ router.get('/latest', async (req, res) => {
 
 router.get('/allDates', async (req, res) => {
     let allhomeWorks = await HomeWork.find({ date: '09-12-2020' });
-    console.log('after fetching all data', allhomeWorks)
     res.send(allhomeWorks)
 })
 

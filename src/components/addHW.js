@@ -5,6 +5,26 @@ import sc from '../styledComponents';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import Axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+
+
+const toastMsg = ({ msg, success, error }) => {
+    let config = {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    }
+    if (success) {
+        toast.success(msg, config);
+    }
+    if (error) {
+        toast.error(msg, config)
+    }
+}
 
 
 const AddHW = (props) => {
@@ -29,8 +49,18 @@ const AddHW = (props) => {
     const uploadHomeWork = async () => {
         console.log('in upload homework')
         // Axios.post('/api/homework/addHomeWork')
-        let body = {name : topicName, date, images : imageData, youtubeLink, updatedBy, description : memoryVerse}
+        if (!(topicName.length && imageData.length && updatedBy.length && memoryVerse.length)) {
+            toastMsg({error : true, msg : 'Please fill all mandatory fields'})
+            return
+        }
+        let body = { name: topicName, date, images: imageData, youtubeLink, updatedBy, description: memoryVerse }
         const res = await Axios.post('/api/homework/addHomeWork', body)
+        if (res.status === 200) {
+            toastMsg({ success: true, msg: 'Added succesfully' })
+        }
+        else {
+            toastMsg({ error: true, msg: 'Failed, Please try again' })
+        }
         console.log('upload homwwork response', res)
     }
     return (
@@ -42,15 +72,15 @@ const AddHW = (props) => {
                 <sc.header>Add Homework</sc.header>
             </sc.div>
             <sc.div className='row'>
-                Topic
+                Topic*
                 <sc.input type="text" id="topicName" value={topicName} onChange={(e) => { setTopicName(e.target.value) }} />
             </sc.div>
             <sc.div className='row'>
-                Image
+                Image*
                 <sc.input type="file" id="img" name="img" accept="image/*" onChange={handleImageUpload} />
             </sc.div>
             <sc.div className='row'>
-                Memory verse
+                Memory verse*
                 <sc.input type="text" id="memoryVerse" value={memoryVerse} onChange={(e) => { setMemoryVerse(e.target.value) }} />
             </sc.div>
             <sc.div className='row'>
@@ -58,18 +88,29 @@ const AddHW = (props) => {
                 <sc.input type="text" id="youtubeLink" value={youtubeLink} onChange={(e) => { setYoutubeLink(e.target.value) }} />
             </sc.div>
             <sc.div className='row'>
-                Updated by
+                Updated by*
                 <sc.input type="text" id="updated by" value={updatedBy} onChange={(e) => { setUpdatedBy(e.target.value) }} />
             </sc.div>
             <sc.div className='row'>
-                select date
-                <DatePicker 
-                selected={date} 
-                onChange={date => { console.log(date); setDate(date) }} 
-                dateFormat="MMMM d, yyyy"
+                Date
+                <DatePicker
+                    selected={date}
+                    onChange={date => { console.log(date); setDate(date) }}
+                    dateFormat="MMMM d, yyyy"
                 />
             </sc.div>
             <button onClick={() => uploadHomeWork()}>upload</button>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </sc.div>
     )
 }

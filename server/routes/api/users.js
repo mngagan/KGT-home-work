@@ -9,7 +9,6 @@ router.get('/', async (req, res) => {
         name : 'from users'
     })
     await user.save()
-    console.log('inside service called', user)
 
     res.send('fine')
 

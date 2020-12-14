@@ -52,12 +52,12 @@ export const ViewHW = () => {
         }
     }, [])
     let displayData = [
-        { name: 'Topic', value: topicName, showName: true },
-        { name: 'Memory Verse', value: description, showName: true },
-        { name: 'Updated By', value: updateBy, showName: true },
+        { name: 'Topic', value: topicName, showName: topicName.length },
+        { name: 'Memory Verse', value: description, showName: description.length },
+        { name: 'Updated By', value: updateBy, showName: updateBy.length },
         { name: 'Date', value: moment(date).format('ddd DD-MMM-YYYY'), showName: true },
-        { name: 'Youtube Link', value: youtubeLink, showName: true, anchroTag: true },
-        { name: 'Image', value: images, showName: true, imageTag: true }
+        { name: 'Youtube Link', value: youtubeLink, showName: youtubeLink.length, anchroTag: true },
+        { name: 'Image', value: images, showName: images !== 'false', imageTag: true }
     ]
     return (
         <sc.div className='container-fluid'>
@@ -68,27 +68,32 @@ export const ViewHW = () => {
             {!error && ready &&
                 <sc.div className='container-fluid'>
                     {displayData.map((data, index) => {
+                        if (data.showName) {
+                            return (
+                                <sc.div className='row' id='bottomPadding' key={index} >
+                                    {/* <sc.div > */}
+                                    <sc.div className='col-4 col-md-3 col-sm-4 col-lg-3' >
+                                        {data.name}
+                                    </sc.div>
+                                    <sc.div className='col-8 col-md-9 col-sm-8 col-lg-9' id='keyLabel'>
+                                        : {!data.anchroTag && !data.imageTag && data.value}
+                                        {data.anchroTag && data.value.length === '' && <a href={data.value} target="blank">open youtube</a>}
+                                        {data.imageTag && data.value !== 'false' && <ModalImage
+                                            small={data.value}
+                                            large={data.value}
+                                            alt="Activity"
+                                            showRotate={true}
+                                            height={'500px'}
+                                            width={'500px'}
+                                        />}
+                                    </sc.div>
+                                    {/* </sc.div> */}
+                                    <hr></hr>
+                                </sc.div>
+                            )
+                        }
                         return (
-                            <sc.div className='row' id='bottomPadding' key = {index} >
-                                {/* <sc.div > */}
-                                <sc.div className='col-4 col-md-3 col-sm-4 col-lg-3' >
-                                    {data.name}
-                                </sc.div>
-                                <sc.div className='col-8 col-md-9 col-sm-8 col-lg-9' id='keyLabel'>
-                                    : {!data.anchroTag && !data.imageTag && data.value}
-                                    {data.anchroTag && data.value && <a href={data.value} target="blank">open youtube</a>}
-                                    {data.imageTag && <ModalImage
-                                        small={data.value}
-                                        large={data.value}
-                                        alt="Activity"
-                                        showRotate = {true}
-                                        height = {'500px'}
-                                        width = {'500px'}
-                                    />}
-                                </sc.div>
-                                {/* </sc.div> */}
-                                <hr></hr>
-                            </sc.div>
+                            <React.Fragment />
                         )
                     })}
                     {/* <sc.div className='row'>
