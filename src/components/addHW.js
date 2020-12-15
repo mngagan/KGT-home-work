@@ -46,11 +46,11 @@ const AddHW = (props) => {
         e.preventDefault();
         let file = e.target.files[0];
         let size = parseFloat(e.target.files[0].size / 1024).toFixed(2)
-        if (size > 1001) {
-            toastMsg({ error: true, msg: 'Image file size exceeded, please upload image with size less than 1mb' })
-            e.target.value = ''
-            return
-        }
+        // if (size > 1001) {
+        //     toastMsg({ error: true, msg: 'Image file size exceeded, please upload image with size less than 1mb' })
+        //     e.target.value = ''
+        //     return
+        // }
         let reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {

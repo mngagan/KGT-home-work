@@ -13,8 +13,8 @@ const buildPath = path.join(__dirname, '..', 'build');
 app.use(express.static(buildPath));
 // app.use(express.json({extended : false}))
 // app.use(express.bodyParser({limit: '2mb'}))
-app.use(bodyParser.json({ limit: "1mb" }))
-app.use(bodyParser.urlencoded({ limit: "1mb", extended: true, parameterLimit: 50000 }))
+app.use(bodyParser.json({ limit: "50mb" }))
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
 
 // app.get('/', (req, res) => {
 //     res.send('API RUNNING')
