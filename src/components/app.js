@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/styles.scss'
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
+import AllDates from './allDates'
 import {
     BrowserRouter as Router,
     Switch,
@@ -51,7 +52,7 @@ export default function App() {
         setMode(newMode)
     }
     const afterOpenModal = () => {
-        // document
+        document.getElementById('pwdInput').focus()
     }
     const checkUser = () => {
         if (document.getElementById('pwdInput').value === '6565') {
@@ -104,6 +105,8 @@ export default function App() {
                 {/* <button onClick = {() => {setIsOpen(true)}}>modal window</button> */}
                 {page === 'view' && <sc.div style={{ height: '100vh' }}><ViewHW /></sc.div>}
                 {page === 'add' && <sc.div style={{ height: '100vh' }}><AddHW /></sc.div>}
+                {/* {page === 'view' && <sc.div style={{ height: '100vh' }}><AllDates /></sc.div>} */}
+                
                 <Modal
                     isOpen={modalIsOpen}
                     onAfterOpen={afterOpenModal}
@@ -113,11 +116,11 @@ export default function App() {
                 >
                     <sc.div className='container'>
                         <sc.div className='row'>
-                            <sc.input type='text' id='pwdInput' />
+                            <sc.input type='text' id='pwdInput' autofocus />
                         </sc.div>
                         <sc.div className='row'>
-                            <button onClick={checkUser}>Submit</button>
-                            <button onClick={() => setIsOpen(false)}>Close</button>
+                            <sc.button onClick={checkUser}>Submit</sc.button>
+                            <sc.button onClick={() => setIsOpen(false)}>Close</sc.button>
                         </sc.div>
                     </sc.div>
                 </Modal>

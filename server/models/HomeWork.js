@@ -30,6 +30,10 @@ const HomeWorkSchema = new mongoose.Schema({
     updatedBy: {
         type: String,
         required: true
+    },
+    uniqueId : {
+        type : String,
+        required : true
     }
 })
 
