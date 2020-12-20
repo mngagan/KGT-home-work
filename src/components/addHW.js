@@ -69,11 +69,11 @@ const AddHW = (props) => {
         // Axios.post('/api/homework/addHomeWork')
         setIsUploading(true)
         try {
-            if (!(topicName.length && imageData.length && updatedBy.length && memoryVerse.length)) {
-                toastMsg({ error: true, msg: 'Please fill all mandatory fields' })
-                setIsUploading(false)
-                return
-            }
+            // if (!(topicName.length && imageData.length && updatedBy.length && memoryVerse.length)) {
+            //     toastMsg({ error: true, msg: 'Please fill all mandatory fields' })
+            //     setIsUploading(false)
+            //     return
+            // }
             let body = { name: topicName, date, images: imageData, youtubeLink, updatedBy, description: memoryVerse }
             const res = await Axios.post('/api/homework/addHomeWork', body)
             console.log('after getting data', res)

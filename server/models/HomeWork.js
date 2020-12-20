@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const HomeWorkSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: false
     },
     timeStatmp: {
         type: Date,
@@ -11,7 +11,7 @@ const HomeWorkSchema = new mongoose.Schema({
     },
     date : {
         type : String,
-        required : true,
+        required : false,
     },
     images: {
         type: String,
@@ -29,7 +29,7 @@ const HomeWorkSchema = new mongoose.Schema({
     },
     updatedBy: {
         type: String,
-        required: true
+        required: false
     },
     uniqueId : {
         type : String,
