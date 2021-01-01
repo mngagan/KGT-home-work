@@ -13,6 +13,14 @@ const HomeWorkSchema = new mongoose.Schema({
         type : String,
         required : false,
     },
+    dayNo : {
+        type : String,
+        required : false
+    },
+    prayerTopic : {
+        type : String,
+        required: false
+    },
     images: {
         type: String,
     },

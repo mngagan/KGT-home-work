@@ -5,7 +5,7 @@ import store from '../store'
 import sc from '../styledComponents'
 import { theme } from '../styledComponents/theme'
 import AddHW from './addHW'
-import { ViewHW } from './viewHW'
+import ViewHW from './viewHW'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/styles.scss'
 import 'react-toastify/dist/ReactToastify.css';
@@ -32,7 +32,7 @@ const customStyles = {
 let allModes = ['default', 'dark', 'other1', 'other2', 'other3', 'other4', 'other5', 'other6', 'other7', 'other8']
 export default function App() {
     const [mode, setMode] = useState('default')
-    const [page, setPage] = useState('view')
+    const [page, setPage] = useState('add')
     const [modalIsOpen, setIsOpen] = useState(false)
     useEffect(() => {
         try {
@@ -55,6 +55,7 @@ export default function App() {
         document.getElementById('pwdInput').focus()
     }
     const checkUser = () => {
+        console.log('in check user')
         if (document.getElementById('pwdInput').value === '6565') {
             setIsOpen(false)
             setPage(page === 'view' ? 'add' : 'view')
@@ -68,6 +69,15 @@ export default function App() {
         }
         else {
             setPage('view')
+        }
+    }
+    const handleKeypress = e => {
+        //it triggers by pressing the enter key
+        // e.persist()
+        let codePressed = e.keyCode || e.charCode
+        // console.log('in handle key press', e.keyCode, e.charCode)
+        if (codePressed === 13) {
+            checkUser();
         }
     }
     return (
@@ -106,20 +116,21 @@ export default function App() {
                 {page === 'view' && <sc.div style={{ height: '100vh' }}><ViewHW /></sc.div>}
                 {page === 'add' && <sc.div style={{ height: '100vh' }}><AddHW /></sc.div>}
                 {/* {page === 'view' && <sc.div style={{ height: '100vh' }}><AllDates /></sc.div>} */}
-                
+
                 <Modal
                     isOpen={modalIsOpen}
                     onAfterOpen={afterOpenModal}
                     // onRequestClose={closeModal}
                     style={customStyles}
+                    ariaHideApp={false}
                     contentLabel="Example Modal"
                 >
                     <sc.div className='container'>
                         <sc.div className='row'>
-                            <sc.input type='text' id='pwdInput' autofocus />
+                            <sc.input type='text' id='pwdInput' autoFocus onKeyPress={handleKeypress} />
                         </sc.div>
                         <sc.div className='row'>
-                            <sc.button onClick={checkUser}>Submit</sc.button>
+                            <sc.button onClick={checkUser} >Submit</sc.button>
                             <sc.button onClick={() => setIsOpen(false)}>Close</sc.button>
                         </sc.div>
                     </sc.div>

@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
+// import DatePicker from 'react-datepicker'
+// import "react-datepicker/dist/react-datepicker.css";
+import Axios from 'axios';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import DatePicker from 'react-date-picker';
+import ModalImage from "react-modal-image";
 import { connect } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
 import { updateTest } from "../actions/index";
 import sc from '../styledComponents';
-import DatePicker from 'react-datepicker'
-import "react-datepicker/dist/react-datepicker.css";
-import Axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import { indexOf } from 'lodash';
-import { theme } from '../styledComponents/theme'
+import { theme } from '../styledComponents/theme';
 import { AllDates } from './allDates';
-import moment from 'moment';
-import ModalImage from "react-modal-image";
 
 const themeTemp = theme(localStorage.getItem('my-mode'))
 
 const toastMsg = ({ msg, success, error, warning }) => {
     let config = {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -45,20 +45,20 @@ const AddHW = (props) => {
     const [date, setDate] = useState(new Date());
     const [isUploading, setIsUploading] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
+    const [dayNo, setDayNo] = useState('')
+    const [prayerTopic, setPrayerTopic] = useState('')
+
+    useEffect(() => {
+        //empty all variables while adding homework
+    }, [])
 
     const handleImageUpload = (e) => {
         e.preventDefault();
         let file = e.target.files[0];
         let size = parseFloat(e.target.files[0].size / 1024).toFixed(2)
-        // if (size > 1001) {
-        //     toastMsg({ error: true, msg: 'Image file size exceeded, please upload image with size less than 1mb' })
-        //     e.target.value = ''
-        //     return
-        // }
         let reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            // document.getElementById('myimg').src = reader.result
             setImageData(reader.result)
         };
     }
@@ -66,15 +66,9 @@ const AddHW = (props) => {
         if (isUploading) {
             toastMsg({ warning: true, msg: 'Your request is in progress. Please wait' })
         }
-        // Axios.post('/api/homework/addHomeWork')
         setIsUploading(true)
         try {
-            // if (!(topicName.length && imageData.length && updatedBy.length && memoryVerse.length)) {
-            //     toastMsg({ error: true, msg: 'Please fill all mandatory fields' })
-            //     setIsUploading(false)
-            //     return
-            // }
-            let body = { name: topicName, date, images: imageData, youtubeLink, updatedBy, description: memoryVerse }
+            let body = { name: topicName, date, images: imageData, youtubeLink, updatedBy, description: memoryVerse, dayNo, prayerTopic }
             const res = await Axios.post('/api/homework/addHomeWork', body)
             console.log('after getting data', res)
             if (res.data.success) {
@@ -85,9 +79,6 @@ const AddHW = (props) => {
                 toastMsg({ error: true, msg: 'Failed, Please try again' })
                 setIsUploading(false)
             }
-            // Axios.post('/api/homework/addHomeWork', body)
-            // .error(e=>{
-            // })
         } catch (e) {
             toastMsg({ error: true, msg: 'Failed, Please try again, ERROR' })
             setIsUploading(false)
@@ -108,22 +99,15 @@ const AddHW = (props) => {
                 setUpdatedBy(uBy)
                 setMemoryVerse(memoryVerse)
                 setIsEditing(true)
-                // setReady(true)
-                // setError(false)
-                // setDate(date1)
                 setIsUploading(false)
+                setDate(date1)
             }
             else if (response.success && !response.data.length) {
-                // setError(true)
-                // setReady(true)
                 setIsUploading(false)
             }
             else {
-                // setError(true)
             }
         } catch (error) {
-            // setError(true)
-            // setReady(true)
             setIsUploading(false)
         }
     }
@@ -135,6 +119,7 @@ const AddHW = (props) => {
         { name: 'Updated by*', type: 'input', inputType: 'text', value: updatedBy, id: 'updatedBy', onChange: (e) => { setUpdatedBy(e.target.value) } },
         { name: 'Date*', type: 'datePicker', value: date, id: 'date', onChange: date => { setDate(date) }, dateFormat: 'MMMM d, yyyy' },
     ]
+    console.log('in addHW', date)
     return (
         <sc.div className='container'>
             <sc.div className='row'>
@@ -183,7 +168,7 @@ const AddHW = (props) => {
                 </sc.div>
                 <sc.div className='row'>
                     <sc.div className='col-4 col-md-3 col-sm-4 col-lg-3' >
-                        Image*
+                        Activity*
                     </sc.div>
                     {!isEditing && <sc.div className='col-8 col-md-9 col-sm-8 col-lg-9' id='keyLabel'>
                         <sc.input type="file" id="img" name="img" accept="image/*" onChange={e => { handleImageUpload(e) }} />
@@ -210,10 +195,26 @@ const AddHW = (props) => {
                 </sc.div>
                 <sc.div className='row'>
                     <sc.div className='col-4 col-md-3 col-sm-4 col-lg-3' >
-                        Memory verse*
+                        Memory verse
                     </sc.div>
                     <sc.div className='col-8 col-md-9 col-sm-8 col-lg-9' id='keyLabel'>
                         <sc.input type="text" id="memoryVerse" value={memoryVerse} onChange={(e) => { setMemoryVerse(e.target.value) }} />
+                    </sc.div>
+                </sc.div>
+                <sc.div className='row'>
+                    <sc.div className='col-4 col-md-3 col-sm-4 col-lg-3' >
+                        Day No
+                    </sc.div>
+                    <sc.div className='col-8 col-md-9 col-sm-8 col-lg-9' id='keyLabel'>
+                        <sc.input type="text" id="dayNo" value={dayNo} onChange={(e) => { setDayNo(e.target.value) }} />
+                    </sc.div>
+                </sc.div>
+                <sc.div className='row'>
+                    <sc.div className='col-4 col-md-3 col-sm-4 col-lg-3' >
+                        Prayer Topic
+                    </sc.div>
+                    <sc.div className='col-8 col-md-9 col-sm-8 col-lg-9' id='keyLabel'>
+                        <sc.input type="text" id="prayerTopic" value={prayerTopic} onChange={(e) => { setPrayerTopic(e.target.value) }} />
                     </sc.div>
                 </sc.div>
                 <sc.div className='row'>
@@ -237,11 +238,12 @@ const AddHW = (props) => {
                         Date
                     </sc.div>
                     <sc.div className='col-8 col-md-9 col-sm-8 col-lg-9' id='keyLabel'>
-                        {!isEditing ? <DatePicker
-                            selected={date}
+                        {true ? <DatePicker
+                            value={date}
                             onChange={date => { setDate(date) }}
-                            dateFormat="MMMM d, yyyy"
-                        /> : moment(date).format('MMM DD YYYY')}
+                            format="MMMM d, yyyy"
+                        />
+                             : moment(date).format('MMM DD YYYY')}
                     </sc.div>
                 </sc.div>
                 <sc.div className='col-12 col-sm-12 col-md-12 col-lg-12' style={{ textAlign: 'end' }}>
