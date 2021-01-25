@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const HomeWorkSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: false
+        required: false,
+        dafault : ''
     },
     timeStatmp: {
         type: Date,
@@ -15,29 +16,36 @@ const HomeWorkSchema = new mongoose.Schema({
     },
     dayNo : {
         type : String,
-        required : false
+        required : false,
+        dafault : ''
     },
     prayerTopic : {
         type : String,
-        required: false
+        required: false,
+        dafault : ''
     },
     images: {
         type: String,
+        dafault : ''
     },
     youtubeLink: {
-        type: String
+        type: String,
+        dafault : ''
     },
     title: {
         type: String,
-        required: false
+        required: false,
+        dafault : ''
     },
     description: {
         type: String,
-        required: false
+        required: false,
+        dafault : ''
     },
     updatedBy: {
         type: String,
-        required: false
+        required: false,
+        dafault : ''
     },
     uniqueId : {
         type : String,

@@ -92,9 +92,11 @@ export const fetchAllHWDates = () => async dispatch => {
     })
     let response = await axios.get('/api/homework/allDates')
     if (response.data.success && response.data.data.length > 0) {
+        let result = response.data.data
+        console.log('in fetch dates result', result)
         dispatch({
             type: 'FETCH_ALL_DATES',
-            payload: response.data.data
+            payload: response.data.data 
         })
         dispatch({
             type: 'ERROR',
@@ -104,7 +106,7 @@ export const fetchAllHWDates = () => async dispatch => {
     else if (response.data.success && response.data.data.length == 0) {
         dispatch({
             type: 'FETCH_ALL_DATES',
-            payload: response.data.data
+            payload: []
         })
         dispatch({
             type: 'ERROR',

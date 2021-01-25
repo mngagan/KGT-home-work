@@ -9,4 +9,9 @@ export const button = styled.button`
   border: 2px solid ${props => props.theme.primary} ;
   border-radius: 5px;
   transition : background-color  1s, color 1s, border 1s;
+  &:hover{
+    background-color: ${props => props.theme.primary};
+    color: ${props => props.theme.text};
+    border: 2px solid ${props => props.theme.text};
+  }
 `;

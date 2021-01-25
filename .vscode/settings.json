@@ -1,3 +1,9 @@
 {
-    "compile-hero.disable-compile-files-on-did-save-code": true
+    "compile-hero.disable-compile-files-on-did-save-code": true,
+    "editor.snippetSuggestions": "none",
+    "npm.fetchOnlinePackageInfo": false,
+    "html.hover.documentation": false,
+    "html.hover.references": false,
+    "editor.hover.sticky": false,
+    "editor.hover.enabled": false
 }

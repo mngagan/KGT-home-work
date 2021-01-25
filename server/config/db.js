@@ -1,9 +1,12 @@
 const mongoose = require('mongoose')
 const config = require('config')
 require('dotenv').config();
-const db = process.env.mongoURI || config.get('mongoURI')
+var db = process.env.mongoURI || config.get('mongoURI')
+if(process.env.NODE_ENV == 'development'){
+    db  = 'mongodb://127.0.0.1:27017/KgtHomeWork'
+}
+console.log('connected to ', db)
 
-console.log('database connected to ', process.env.mongoURI)
 
 const connectDB = async () => {
     try {

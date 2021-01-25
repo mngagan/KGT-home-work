@@ -11,6 +11,10 @@ import '../css/styles.scss'
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
 import AllDates from './allDates'
+import { toast, ToastContainer } from 'react-toastify';
+import { FaBrush } from "react-icons/fa";
+
+import { RiAdminFill } from "react-icons/ri";
 import {
     BrowserRouter as Router,
     Switch,
@@ -32,7 +36,7 @@ const customStyles = {
 let allModes = ['default', 'dark', 'other1', 'other2', 'other3', 'other4', 'other5', 'other6', 'other7', 'other8']
 export default function App() {
     const [mode, setMode] = useState('default')
-    const [page, setPage] = useState('add')
+    const [page, setPage] = useState('view')
     const [modalIsOpen, setIsOpen] = useState(false)
     useEffect(() => {
         try {
@@ -83,40 +87,14 @@ export default function App() {
     return (
         <Provider store={store}>
             <ThemeProvider theme={theme(mode)}>
-                {/* <button onClick={() => handleChangeMode()}>change theme</button> */}
-                {/* <Router>
-                    <a href="#" class="float" onClick={() => handleChangeMode()} style={{ backgroundColor: theme(mode).text }}>
-                        <i class="fa fa-plus my-float"></i>
-                    </a>
-                    <Link to="/add">
-                        <a href="#" class="float-right" style={{ backgroundColor: theme(mode).text }}>
-                            <i class="fa fa-plus my-float1"></i>
-                        </a>
-                    </Link>
-                    <Switch>
-                        <Route path="/add">
-                            <sc.div style={{ height: '100vh' }}>
-                                <AddHW />
-                            </sc.div>
-                        </Route>
-                        <Route path="/">
-                            <sc.div style={{ height: '100vh' }}>
-                                <ViewHW />
-                            </sc.div>
-                        </Route>
-                    </Switch>
-                </Router> */}
-                <a href="#" class="float" onClick={() => handleChangeMode()} style={{ backgroundColor: theme(mode).text }}>
-                    <i class="fa fa-plus my-float"></i>
+                <a href="#" class="float" onClick={() => handleChangeMode()} >
+                    <FaBrush style={{ color: theme(mode).text }} />
                 </a>
-                <a href="#" class="float-right" onClick={() => leftButtonClick()} style={{ backgroundColor: theme(mode).text }}>
-                    <i class="fa fa-plus my-float1"></i>
+                <a href="#" class="float-right" onClick={() => leftButtonClick()} >
+                    <RiAdminFill style={{ color: theme(mode).text }} />
                 </a>
-                {/* <button onClick = {() => {setIsOpen(true)}}>modal window</button> */}
                 {page === 'view' && <sc.div style={{ height: '100vh' }}><ViewHW /></sc.div>}
                 {page === 'add' && <sc.div style={{ height: '100vh' }}><AddHW /></sc.div>}
-                {/* {page === 'view' && <sc.div style={{ height: '100vh' }}><AllDates /></sc.div>} */}
-
                 <Modal
                     isOpen={modalIsOpen}
                     onAfterOpen={afterOpenModal}
@@ -135,6 +113,17 @@ export default function App() {
                         </sc.div>
                     </sc.div>
                 </Modal>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
             </ThemeProvider>
         </Provider>
     )

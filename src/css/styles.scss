@@ -1,8 +1,8 @@
 @media all and (min-width: 100px) and (max-width: 767px) {
-  div {
-    font-size: 1rem;
-    // transition : background-color  2s, color 2s;
-  }
+	div {
+		font-size: 1rem;
+		// transition : background-color  2s, color 2s;
+	}
 }
 
 // html{
@@ -10,50 +10,56 @@
 // }
 
 @media screen and (min-width: 768px) {
-  div {
-  font-size: 1.5rem;
-  }
-} 
-
-#bottomPadding{
-  padding-bottom: 10px !important;
-}
-#keyLabel{
-  font-weight: 500;
+	div {
+		font-size: 1.5rem;
+	}
 }
 
-a { color: inherit;
-  transition : background-color  1s;
-} 
-
-
-.float{
-	position:fixed;
-	width:40px;
-	height:40px;
-	top:-20px;
-	right:-20px;
-	// background-color:#0C9;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: -2px 2px 3px #999;
-}
-.float-right{
-	position:fixed;
-	width:40px;
-	height:40px;
-	top:-20px;
-	left:-20px;
-	// background-color:#0C9;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
+#bottomPadding {
+	padding-bottom: 10px !important;
 }
 
-.my-float{
-	margin-top:22px;
+#keyLabel {
+	font-weight: 500;
+}
+
+a {
+	color: inherit;
+	transition: background-color 1s;
+}
+
+
+.float {
+	position: fixed;
+	/* width: 40px; */
+	/* height: 40px; */
+	top: 0px;
+	right: 5px;
+	color: #FFF;
+	border-radius: 50px;
+	text-align: center;
+	/* box-shadow: -2px 2px 3px #999;*/
+}
+
+.float-right {
+	position: fixed;
+	/* width: 40px; */
+	/* height: 40px; */
+	/* top: -20px; */
+	/* left: -20px; */
+	color: #FFF;
+	border-radius: 50px;
+	text-align: center;
+	right: 40px;
+}
+
+.allDatesIcon {
+	position: absolute;
+	top: 0px;
+}
+
+.my-float {
+	margin-top: 22px;
 }
 
 .sidenav {
@@ -67,29 +73,30 @@ a { color: inherit;
 	overflow-x: hidden;
 	transition: all 1s;
 	padding-top: 60px;
-  }
-  
-  .sidenav a {
+}
+
+.sidenav a {
 	padding: 8px 8px 8px 32px;
 	text-decoration: none;
 	font-size: 25px;
 	color: #818181;
 	display: block;
 	transition: 0.3s;
-  }
-  
-  .sidenav a:hover {
+}
+
+.sidenav a:hover {
 	color: #f1f1f1;
-  }
-  
-  .sidenav .closebtn {
+}
+
+.sidenav .closebtn {
 	position: absolute;
 	top: 0;
 	right: 25px;
 	font-size: 36px;
 	margin-left: 50px;
-  }
+	cursor: pointer;
+}
 
-  .nopad{
-	  padding : 0
-  }
+.nopad {
+	padding: 0
+}

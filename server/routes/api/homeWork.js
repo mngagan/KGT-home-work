@@ -11,6 +11,7 @@ const { db } = require('../../models/HomeWork')
 router.get('/latest', async (req, res) => {
     try {
         let data = await HomeWork.find({}).sort({ date: -1 }).limit(1)
+        console.log('in latest fetched', data[0].uniqueId, data[0].timeStamp, data[0].date)
         res.send({ success: true, data })
     }
     catch (e) {
@@ -21,6 +22,20 @@ router.get('/latest', async (req, res) => {
 router.get('/allDates', async (req, res) => {
     try {
         let allhomeWorks = await HomeWork.find({}).select({ 'uniqueId': 1, 'date': 1 }).sort('date')
+        // allhomeWorks.sort(function(a,b){
+        //     // Turn your strings into dates, and then subtract them
+        //     // to get a value that is either negative, positive, or zero.
+        //     return new Date(b.date) - new Date(a.date);
+        //   });
+        res.send({ success: true, data: allhomeWorks })
+    } catch (e) {
+        res.send({ 'success': false, error: e })
+    }
+})
+
+router.get('/allHWInfo', async (req, res) => { 
+    try {
+        let allhomeWorks = await HomeWork.find({}).select(['-images', '-timeStatmp',, '-date', '-__v', '-title', '-_id']).sort('date')
         res.send({ success: true, data: allhomeWorks })
     } catch (e) {
         res.send({ 'success': false, error: e })
@@ -59,12 +74,13 @@ router.post('/addHomeWork', async (req, res) => {
 })
 
 router.post('/updateBulk', async (req, res) => {
-    let uData = JSON.parse(req.body.data)
+    let uData = typeof req.body.data == 'string' ?  JSON.parse(req.body.data) : req.body.data
     let keys = Object.keys(uData[0])
     let dataIndex = keys.indexOf('uniqueId')
     keys.splice(dataIndex, 1)
     uData = uData.map((data, index) => {
         data.date = new Date(`${data.uniqueId.substring(0, 4)}-${data.uniqueId.substring(4, 6)}-${data.uniqueId.substring(6, 8)}`)
+        data.date = data.date.toISOString()
         return data
     })
     if (keys.indexOf('date') === -1) {
@@ -78,13 +94,15 @@ router.post('/updateBulk', async (req, res) => {
                 uniqueId: data.uniqueId
             }
         }
+        let keys = Object.keys(data)
         keys.map(key => {
             result.updates[key] = data[key]
         })
         payload.push(result)
     })
-    console.log('in payload', payload)
     let count = { updated: 0, added: 0 }
+    let success = true, temp, temp2
+    temp2 = payload
     uData = await Promise.all(payload.map(async data => {
         try {
             let result = await HomeWork.findOneAndUpdate({ uniqueId: data.uniqueId }, data.updates, {
@@ -92,7 +110,7 @@ router.post('/updateBulk', async (req, res) => {
                 upsert: true,
                 rawResult: true // Return the raw result from the MongoDB driver
             });
-            console.log('result', result.lastErrorObject)
+            temp = result
             // data.lastErrorObject = result.lastErrorObject
             if (result.lastErrorObject.updatedExisting) {
                 count.updated = count.updated + 1
@@ -105,10 +123,11 @@ router.post('/updateBulk', async (req, res) => {
         catch (e) {
             console.log('in error', e)
             data.success = false
+            success = false
         }
         return data
     }))
-    res.json({ count })
+    res.json({ count, success, temp, temp2 })
 })
 
 
