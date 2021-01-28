@@ -8,34 +8,14 @@ import ModalImage from "react-modal-image";
 import { connect } from 'react-redux';
 import { updateTest } from "../actions/index";
 import sc from '../styledComponents';
-import { theme } from '../styledComponents/theme';
 import { AllDates } from './allDates';
 import BulkUpload from './bulkUpload';
 import { toastMsg } from './toastMsg';
+import { theme } from '../styledComponents/theme';
+import { fetchAllHWDates } from '../actions'
+import { useDispatch, useSelector } from 'react-redux'
 
 const themeTemp = theme(localStorage.getItem('my-mode'))
-
-// const toastMsg = ({ msg, success, error, warning }) => {
-//     let config = {
-//         position: "bottom-right",
-//         autoClose: 3000,
-//         hideProgressBar: false,
-//         closeOnClick: true,
-//         pauseOnHover: true,
-//         draggable: true,
-//         progress: undefined,
-//     }
-//     if (success) {
-//         toast.success(msg, config);
-//     }
-//     if (error) {
-//         toast.error(msg, config)
-//     }
-//     if (warning) {
-//         toast.warn(msg, config)
-//     }
-// }
-
 
 const AddHW = (props) => {
     const [imageData, setImageData] = useState(false)
@@ -49,6 +29,7 @@ const AddHW = (props) => {
     const [dayNo, setDayNo] = useState('')
     const [prayerTopic, setPrayerTopic] = useState('')
     const [bulkUpload, setBulkUpload] = useState(false)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         //empty all variables while adding homework
@@ -75,6 +56,7 @@ const AddHW = (props) => {
             console.log('after getting data', res)
             if (res.data.success) {
                 toastMsg({ success: true, msg: 'Added succesfully' })
+                dispatch(fetchAllHWDates())
                 setIsUploading(false)
             }
             else {
@@ -123,7 +105,7 @@ const AddHW = (props) => {
     ]
     console.log('in addHW', date)
     if (bulkUpload) {
-        return <BulkUpload setBulkUpload = {setBulkUpload}/>
+        return <BulkUpload setBulkUpload={setBulkUpload} />
     }
     return (
         <sc.div className='container-fluid'>

@@ -73,6 +73,25 @@ router.post('/addHomeWork', async (req, res) => {
     }
 })
 
+router.post('/deleteHomeWork', async (req, res) => {
+    console.log('in delete homework API')
+    try {
+        let { uniqueId } = req.body
+        let result = await HomeWork.deleteOne({ uniqueId });
+        if(result.deletedCount != 0){
+            res.send({ success: true, data: result})
+        }
+        else{
+            res.send({ success: false, msg: 'deleting homework failed' })
+        }
+        // res.send({success : true})
+        return
+    } catch (error) {
+        console.log('error', error)
+        res.send({ success: false, msg: 'deleting homework failed', error })
+    }
+})
+
 router.post('/updateBulk', async (req, res) => {
     let uData = typeof req.body.data == 'string' ?  JSON.parse(req.body.data) : req.body.data
     let keys = Object.keys(uData[0])
@@ -87,7 +106,7 @@ router.post('/updateBulk', async (req, res) => {
         keys.push('date')
     }
     let payload = []
-    uData.map(data => {
+    uData.map(data => { 
         let result = {
             uniqueId: data.uniqueId,
             updates: {

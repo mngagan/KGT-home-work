@@ -3,10 +3,14 @@ import moment from 'moment';
 import React, { useRef, useState } from 'react';
 import sc from '../styledComponents';
 import { toastMsg } from './toastMsg';
+import { fetchAllHWDates } from '../actions'
+
+import { connect, useDispatch, useSelector } from 'react-redux'
 
 
 export default function BulkUpload(props) {
     const [data, setData] = useState([])
+    const dispatch = useDispatch()
     const [enableDataUpload, setEnableDataUpload] = useState(true)
     const dataRef = useRef(null)
     let renderInfo = [
@@ -128,12 +132,11 @@ export default function BulkUpload(props) {
             toastMsg({ error: true, msg: msg || '' })
             return
         }
-        console.log('before upload data', data)
         const res = await Axios.post('/api/homework/updateBulk', { data })
         if (res.data.success) {
             toastMsg({ success: true, msg: `Operation succesfull. ${res.data.count.updated} updated and ${res.data.count.added} added` })
+            dispatch(fetchAllHWDates())
         }
-        console.log('after uploading data', res)
     }
     return (
         <sc.div className='container-fluid'>
@@ -152,47 +155,48 @@ export default function BulkUpload(props) {
                     <sc.textArea ref={dataRef} rows="10" onChange={e => console.log(dataRef)} />
                 </sc.div>
             }
-            <sc.div style = {{textAlign : 'end'}}>
+            <sc.div style={{ textAlign: 'end' }}>
                 {!enableDataUpload && <sc.button onClick={addData}>Upload</sc.button>}
                 {enableDataUpload && <sc.button onClick={download}>Download existing data</sc.button>}
                 {enableDataUpload && <sc.button onClick={uploadJSON}>Upload data</sc.button>}
                 {/* {enableDataUpload && <sc.button onClick={() => setEnableDataUpload(false)}>Disable bulk upload</sc.button>} */}
-                {enableDataUpload && <sc.button onClick={() =>  props.setBulkUpload(false)}>Disable bulk upload</sc.button>}
-               
+                {enableDataUpload && <sc.button onClick={() => props.setBulkUpload(false)}>Close</sc.button>}
+
                 {!enableDataUpload && <sc.button onClick={() => setEnableDataUpload(true)}>Enable bulk upload</sc.button>}
             </sc.div>
-            {enableDataUpload && <sc.div className='row'>
-                <sc.div className='col-sm-12 col-md-12'>information regarding keys</sc.div>
-                <sc.div className='col-sm-3 col-md-3'>uniqueId</sc.div>
-                <sc.div className='col-sm-9 col-md-9'>
+            {enableDataUpload && <sc.div className='container'><sc.div className='row'>
+                <sc.div className='col-sm-12 col-md-12'><b>Keys Information</b></sc.div>
+                <sc.div className='col-sm-3 col-md-3' border>uniqueId</sc.div>
+                <sc.div className='col-sm-9 col-md-9' border>
                     - This is just a date in a format of year month and day without any seperations.<br />
-                    &ensp;This is the main information to identifty. <br />
+                    &ensp;This is the main information to identifty any day. <br />
                     &ensp;This should always have 8 numbers. <br />
                     &ensp;Example : <br />
                     &emsp;&ensp; if date is 31st december 2005 then uniqueId is 20051231 <br />
                     &emsp;&ensp; if date is 1st march 2012 then uniqueId is 20120301 <br />
                 </sc.div>
                 <hr />
-                <sc.div className='col-sm-3 col-md-3'>name</sc.div>
-                <sc.div className='col-sm-9 col-md-9'>
+                <sc.div className='col-sm-3 col-md-3 ' border >name</sc.div>
+                <sc.div className='col-sm-9 col-md-9' border>
                     - Name/Topic of the class
                 </sc.div>
-                <sc.div className='col-sm-3 col-md-3'>description</sc.div>
-                <sc.div className='col-sm-9 col-md-9'>
+                <sc.div className='col-sm-3 col-md-3' border>description</sc.div>
+                <sc.div className='col-sm-9 col-md-9' border>
                     - Memory verse
                 </sc.div>
-                <sc.div className='col-sm-3 col-md-3'>prayerTopic</sc.div>
-                <sc.div className='col-sm-9 col-md-9'>
+                <sc.div className='col-sm-3 col-md-3' border>prayerTopic</sc.div>
+                <sc.div className='col-sm-9 col-md-9' border>
                     - Prayer Topic
                 </sc.div>
-                <sc.div className='col-sm-3 col-md-3'>dayNo</sc.div>
-                <sc.div className='col-sm-9 col-md-9'>
+                <sc.div className='col-sm-3 col-md-3' border>dayNo</sc.div>
+                <sc.div className='col-sm-9 col-md-9' border>
                     - Day Number
                 </sc.div>
-                <sc.div className='col-sm-3 col-md-3'>updatedBy</sc.div>
-                <sc.div className='col-sm-9 col-md-9'>
+                <sc.div className='col-sm-3 col-md-3' border>updatedBy</sc.div>
+                <sc.div className='col-sm-9 col-md-9' border>
                     - resource who presented to class
                 </sc.div>
+            </sc.div>
             </sc.div>}
 
         </sc.div>

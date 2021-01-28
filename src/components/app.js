@@ -13,6 +13,7 @@ import Modal from 'react-modal';
 import AllDates from './allDates'
 import { toast, ToastContainer } from 'react-toastify';
 import { FaBrush } from "react-icons/fa";
+import ParticlesBg from 'particles-bg'
 
 import { RiAdminFill } from "react-icons/ri";
 import {
@@ -36,8 +37,40 @@ const customStyles = {
 let allModes = ['default', 'dark', 'other1', 'other2', 'other3', 'other4', 'other5', 'other6', 'other7', 'other8']
 export default function App() {
     const [mode, setMode] = useState('default')
-    const [page, setPage] = useState('view')
+    const [page, setPage] = useState('add')
     const [modalIsOpen, setIsOpen] = useState(false)
+    let config = {
+        num: [4, 7],
+        rps: 0.1,
+        radius: [5, 40],
+        life: [1.5, 3],
+        v: [2, 3],
+        tha: [-40, 40],
+        alpha: [0.6, 0],
+        scale: [.1, 0.4],
+        position: "all",
+        color: ["random", "#ff0000"],
+        cross: "dead",
+        // emitter: "follow",
+        random: 15
+      };
+    
+      if (Math.random() > 0.85) {
+        config = Object.assign(config, {
+          onParticleUpdate: (ctx, particle) => {
+            ctx.beginPath();
+            ctx.rect(
+              particle.p.x,
+              particle.p.y,
+              particle.radius * 2,
+              particle.radius * 2
+            );
+            ctx.fillStyle = particle.color;
+            ctx.fill();
+            ctx.closePath();
+          }
+        });
+      }
     useEffect(() => {
         try {
             const value = localStorage.getItem('my-mode');
@@ -124,6 +157,7 @@ export default function App() {
                     draggable
                     pauseOnHover
                 />
+                <ParticlesBg type="custom" config={config} bg={true} />
             </ThemeProvider>
         </Provider>
     )

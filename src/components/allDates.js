@@ -6,6 +6,11 @@ import { fetchAllHWDates } from '../actions'
 import sc from '../styledComponents'
 import { RiMenuFill } from "react-icons/ri";
 import _ from 'lodash'
+import { theme } from '../styledComponents/theme';
+import { toastMsg } from './toastMsg';
+import { AiFillDelete, AiOutlineDelete } from "react-icons/ai";
+
+const themeTemp = theme(localStorage.getItem('my-mode'))
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -17,6 +22,8 @@ export const AllDates = (props) => {
     const error = useSelector((state) => state.hw.error)
     const errorMsg = useSelector((state) => state.hw.errorMsg)
     const isLoading = useSelector((state) => state.hw.isLoading)
+    const [enableDelete, setEnableDelete] = useState(false)
+    const [toggleHover, setToggleHover] = useState(false)
 
     const openNav = () => {
         console.log('in open nav')
@@ -37,14 +44,33 @@ export const AllDates = (props) => {
     var groupedByMonth = _.groupBy(allDates, function (item) {
         return item.date.substring(0, 7);
     });
+    const handleDeleteClick = async ({ uniqueId }) => {
+        console.log('in delete id clicked', uniqueId)
+        let result = await Axios.post('/api/homework/deleteHomeWork', { uniqueId })
+        if (result.data.success) {
+            toastMsg({ success: true, msg: 'Deletion succesfull' })
+            dispatch(fetchAllHWDates())
+        }
+        else {
+            toastMsg({ error: true, msg: 'Deletion failed' })
+        }
+        console.log('result is as follows', result)
+
+    }
     console.log('in all dates grouped by month', groupedByMonth)
     return (
         <sc.div className='allDatesIcon'>
             <span style={{ fontSize: '30px', cursor: 'pointer' }} onClick={openNav}><RiMenuFill /></span>
             <sc.div id="mySidenav" className="sidenav">
                 <a className='closebtn' onClick={closeNav}>&times;</a>
-                {/* {props.showDeleteButton && <sc.button>show delete button</sc.button>} */}
-                <sc.div className='container'>
+                <sc.div className='container-fluid'>
+                    {props.showDeleteButton &&
+                        <sc.div className='row'>
+                            <sc.div className='col-12 col-sm-12 co-md-12 col-lg-12'>
+                                <sc.button style={{ float: 'right' }} onClick={() => setEnableDelete(!enableDelete)}>{enableDelete ? 'Disable delete' : 'Enable delete'}</sc.button>
+                            </sc.div>
+                        </sc.div>
+                    }
                     {error && <sc.div>{errorMsg}</sc.div>}
                     {isLoading && <sc.div>loading please wait</sc.div>}
                     {!error && !isLoading && false &&
@@ -60,15 +86,35 @@ export const AllDates = (props) => {
                         !error && !isLoading && <sc.div className='container'>
                             {Object.keys(groupedByMonth).map((key, index) => {
                                 return (
-                                    <sc.div className='row'>
+                                    <sc.div className='row' hover >
                                         <sc.div className='col-12 col-sm-12 col-md-12 col-lg-12'>
                                             {`${monthNames[parseInt(key.substring(5)) - 1]}  ${key.substring(0, 4)}`}
                                         </sc.div>
                                         {
-                                            groupedByMonth[key].map((val, i) => {
+                                            !enableDelete && groupedByMonth[key].map((val, i) => {
                                                 return (
                                                     <sc.div className='col-1 col-sm-1 col-md-1 col-lg-1' style={{ cursor: 'pointer' }} key={index + i} onClick={() => { handleClick(val) }}>
-                                                        {val.date.substr(8,2)}
+                                                        {val.date.substr(8, 2)}
+                                                    </sc.div>
+                                                )
+                                            })
+                                        }
+                                        {
+                                            enableDelete && groupedByMonth[key].map((val, i) => {
+                                                let random = Math.random().toString(36).slice(2)
+                                                return (
+                                                    <sc.div className='' style={{ cursor: 'pointer', paddingLeft: '35px' }} key={index + i}>
+                                                        <span style={{ borderBottom: '1px solid black' }}>
+                                                            <span onClick={() => { handleClick(val) }}>{val.date.substr(8, 2)}</span>
+                                                            <span
+                                                                onClick={() => { handleDeleteClick({ uniqueId: val.uniqueId }) }}
+                                                                style={{ paddingLeft: '5px' }}
+                                                                onMouseEnter={() => setToggleHover(val.uniqueId)}
+                                                                onMouseLeave={() => setToggleHover(null)}
+                                                            >
+                                                                {toggleHover === val.uniqueId ? <AiFillDelete /> : <AiOutlineDelete />}
+                                                            </span>
+                                                        </span>
                                                     </sc.div>
                                                 )
                                             })
