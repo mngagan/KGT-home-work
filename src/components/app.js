@@ -37,7 +37,7 @@ const customStyles = {
 let allModes = ['default', 'dark', 'other1', 'other2', 'other3', 'other4', 'other5', 'other6', 'other7', 'other8']
 export default function App() {
     const [mode, setMode] = useState('default')
-    const [page, setPage] = useState('view')
+    const [page, setPage] = useState('add')
     const [modalIsOpen, setIsOpen] = useState(false)
     let config = {
         num: [4, 7],
