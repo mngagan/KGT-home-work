@@ -205,6 +205,7 @@ export default function BulkUpload(props) {
             ))}
             {enableDataUpload &&
                 <sc.div className='col-12 col-sm-12 col-md-12 col-lg-12'>
+                    <sc.textArea ref={dataRef} rows="10" />
                 </sc.div>
             }
             <sc.div style={{ textAlign: 'end' }}>
