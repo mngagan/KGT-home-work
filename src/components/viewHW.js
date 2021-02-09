@@ -38,13 +38,13 @@ const ViewHW = () => {
 
     let displayData = [
         { name: 'Topic', value: name, showName: name.length },
-        { name: 'Memory Verse', value: description, showName: description?.length },
-        { name: 'Updated By', value: updatedBy, showName: updatedBy?.length },
         { name: 'Day No', value: dayNo, showName: dayNo?.length },
+        { name: 'Lesson By', value: updatedBy, showName: updatedBy?.length },
         { name: 'Prayer Topic', value: prayerTopic, showName: prayerTopic?.length },
-        { name: 'Date', value: date !== '' ? moment(date).format('ddd DD-MMM-YYYY') : '', showName: true },
+        { name: 'Memory Verse', value: description, showName: description?.length },
         { name: 'Youtube Link', value: youtubeLink, showName: youtubeLink?.length, anchroTag: true },
-        { name: 'Activity', value: images, showName: images !== 'false', imageTag: true }
+        { name: 'Date', value: date !== '' ? moment(date).format('ddd DD-MMM-YYYY') : '', showName: true },
+        { name: 'Activity', value: images, showName: true, imageTag: true }
     ]
     let isReady = uniqueId.length ? true : false
     return (

@@ -28,7 +28,7 @@ const AddHW = (props) => {
     const [isEditing, setIsEditing] = useState(false)
     const [dayNo, setDayNo] = useState('')
     const [prayerTopic, setPrayerTopic] = useState('')
-    const [bulkUpload, setBulkUpload] = useState(false)
+    const [bulkUpload, setBulkUpload] = useState(true)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -53,7 +53,6 @@ const AddHW = (props) => {
         try {
             let body = { name: topicName, date, images: imageData, youtubeLink, updatedBy, description: memoryVerse, dayNo, prayerTopic }
             const res = await Axios.post('/api/homework/addHomeWork', body)
-            console.log('after getting data', res)
             if (res.data.success) {
                 toastMsg({ success: true, msg: 'Added succesfully' })
                 dispatch(fetchAllHWDates())
@@ -70,7 +69,6 @@ const AddHW = (props) => {
 
     }
     const fetchSpecificDate = async (arg) => {
-        console.log('fetch specific date', arg)
         setIsUploading(true)
         try {
             let result = await Axios.get('/api/homework/specificHomeWork/' + arg.uniqueId)
@@ -103,7 +101,6 @@ const AddHW = (props) => {
         { name: 'Updated by*', type: 'input', inputType: 'text', value: updatedBy, id: 'updatedBy', onChange: (e) => { setUpdatedBy(e.target.value) } },
         { name: 'Date*', type: 'datePicker', value: date, id: 'date', onChange: date => { setDate(date) }, dateFormat: 'MMMM d, yyyy' },
     ]
-    console.log('in addHW', date)
     if (bulkUpload) {
         return <BulkUpload setBulkUpload={setBulkUpload} />
     }

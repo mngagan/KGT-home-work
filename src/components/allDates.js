@@ -26,7 +26,6 @@ export const AllDates = (props) => {
     const [toggleHover, setToggleHover] = useState(false)
 
     const openNav = () => {
-        console.log('in open nav')
         document.getElementById("mySidenav").style.width = "100%";
     }
 
@@ -45,7 +44,6 @@ export const AllDates = (props) => {
         return item.date.substring(0, 7);
     });
     const handleDeleteClick = async ({ uniqueId }) => {
-        console.log('in delete id clicked', uniqueId)
         let result = await Axios.post('/api/homework/deleteHomeWork', { uniqueId })
         if (result.data.success) {
             toastMsg({ success: true, msg: 'Deletion succesfull' })
@@ -54,10 +52,8 @@ export const AllDates = (props) => {
         else {
             toastMsg({ error: true, msg: 'Deletion failed' })
         }
-        console.log('result is as follows', result)
 
     }
-    console.log('in all dates grouped by month', groupedByMonth)
     return (
         <sc.div className='allDatesIcon'>
             <span style={{ fontSize: '30px', cursor: 'pointer' }} onClick={openNav}><RiMenuFill /></span>

@@ -37,7 +37,7 @@ const customStyles = {
 let allModes = ['default', 'dark', 'other1', 'other2', 'other3', 'other4', 'other5', 'other6', 'other7', 'other8']
 export default function App() {
     const [mode, setMode] = useState('default')
-    const [page, setPage] = useState('add')
+    const [page, setPage] = useState('view')
     const [modalIsOpen, setIsOpen] = useState(false)
     let config = {
         num: [4, 7],
@@ -92,7 +92,6 @@ export default function App() {
         document.getElementById('pwdInput').focus()
     }
     const checkUser = () => {
-        console.log('in check user')
         if (document.getElementById('pwdInput').value === '6565') {
             setIsOpen(false)
             setPage(page === 'view' ? 'add' : 'view')
@@ -112,7 +111,6 @@ export default function App() {
         //it triggers by pressing the enter key
         // e.persist()
         let codePressed = e.keyCode || e.charCode
-        // console.log('in handle key press', e.keyCode, e.charCode)
         if (codePressed === 13) {
             checkUser();
         }
