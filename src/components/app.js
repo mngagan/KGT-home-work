@@ -118,7 +118,7 @@ export default function App() {
     return (
         <Provider store={store}>
             <ThemeProvider theme={theme(mode)}>
-                {/* <Router>
+                <Router>
                     <div>
                         <ul>
                             <li>
@@ -145,7 +145,7 @@ export default function App() {
                             </Route>
                         </Switch>
                     </div>
-                </Router> */}
+                </Router>
                 <a href="#" class="float" onClick={() => handleChangeMode()} >
                     <FaBrush style={{ color: theme(mode).text }} />
                 </a>
