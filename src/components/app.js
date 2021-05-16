@@ -53,24 +53,24 @@ export default function App() {
         cross: "dead",
         // emitter: "follow",
         random: 15
-      };
-    
-      if (Math.random() > 0.85) {
+    };
+
+    if (Math.random() > 0.85) {
         config = Object.assign(config, {
-          onParticleUpdate: (ctx, particle) => {
-            ctx.beginPath();
-            ctx.rect(
-              particle.p.x,
-              particle.p.y,
-              particle.radius * 2,
-              particle.radius * 2
-            );
-            ctx.fillStyle = particle.color;
-            ctx.fill();
-            ctx.closePath();
-          }
+            onParticleUpdate: (ctx, particle) => {
+                ctx.beginPath();
+                ctx.rect(
+                    particle.p.x,
+                    particle.p.y,
+                    particle.radius * 2,
+                    particle.radius * 2
+                );
+                ctx.fillStyle = particle.color;
+                ctx.fill();
+                ctx.closePath();
+            }
         });
-      }
+    }
     useEffect(() => {
         try {
             const value = localStorage.getItem('my-mode');
@@ -118,6 +118,34 @@ export default function App() {
     return (
         <Provider store={store}>
             <ThemeProvider theme={theme(mode)}>
+                <Router>
+                    <div>
+                        <ul>
+                            <li>
+                                <Link to="/">Home</Link>
+                            </li>
+                            <li>
+                                <Link to="/about">About</Link>
+                            </li>
+                            <li>
+                                <Link to="/dashboard">Dashboard</Link>
+                            </li>
+                        </ul>
+
+                        <hr />
+                        <Switch>
+                            <Route exact path="/">
+                                <h2>Home</h2>
+                            </Route>
+                            <Route path="/about">
+                                <h2>about</h2>
+                            </Route>
+                            <Route path="/dashboard">
+                                <h2>dashboard</h2>
+                            </Route>
+                        </Switch>
+                    </div>
+                </Router>
                 <a href="#" class="float" onClick={() => handleChangeMode()} >
                     <FaBrush style={{ color: theme(mode).text }} />
                 </a>

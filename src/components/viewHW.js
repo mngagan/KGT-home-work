@@ -50,7 +50,7 @@ const ViewHW = () => {
     return (
         <sc.div className='container-fluid'>
             <sc.div className='row'>
-                <sc.header>LW & KGT 123</sc.header>
+                <sc.header>LW & KGT</sc.header>
             </sc.div>
             <AllDates fetchSpecificDate={fetchSpecificDate} />
             {isLoading && <sc.div className='container'>

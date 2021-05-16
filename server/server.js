@@ -25,10 +25,16 @@ app.use('/api/users', require('./routes/api/users'))
 app.use('/api/homeWork', require('./routes/api/homeWork'))
 // app.use('/api/profile', require('./routes/api/profile'))
 // app.use('/api/posts', require('./routes/api/posts'))
+app.get('*', (req,res) =>{
+    // console.log('in get all')
+    res.sendFile(path.join(__dirname, '..', 'build/index.html'));
+});
+
 
  
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server started on ${PORT}`)
+    console.log('path', path.join(__dirname, '..', 'build/index.html'), path.join(__dirname, '..', 'build'))
 })
