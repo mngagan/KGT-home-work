@@ -46,9 +46,13 @@ const BirthdayIndex = (props) => {
                 let result
                 if (!data.length) {
                     result = []
+                    tempBirthdayData = result
+                    return result
                 }
                 if (data.length === 1) {
                     result = data[0]
+                    tempBirthdayData = result
+                    return result
                 }
                 result = data[!data[prevData.index + 1] ? 0 : prevData.index + 1]
                 tempBirthdayData = result
