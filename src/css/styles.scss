@@ -31,8 +31,6 @@ a {
 
 .float {
 	position: fixed;
-	/* width: 40px; */
-	/* height: 40px; */
 	top: 0px;
 	right: 5px;
 	color: #FFF;
@@ -43,14 +41,24 @@ a {
 
 .float-right {
 	position: fixed;
-	/* width: 40px; */
-	/* height: 40px; */
-	/* top: -20px; */
-	/* left: -20px; */
 	color: #FFF;
 	border-radius: 50px;
 	text-align: center;
 	right: 40px;
+}
+.bdayIcon {
+	position: fixed;
+	color: #FFF;
+	border-radius: 50px;
+	text-align: center;
+	right: 80px;
+}
+.bibleIcon{
+	position: fixed;
+	color: #FFF;
+	border-radius: 50px;
+	text-align: center;
+	right: 120px;
 }
 
 .allDatesIcon {
@@ -105,4 +113,42 @@ a {
 }
 .b1sb{
 	border: 1px solid black;
+}
+#bibleVerseContainer{
+	font-family: monospace;
+	text-align: center;
+}
+#wishContainer{
+	text-align: center;
+	#wishHead{
+		// font-family: 'Poiret One', cursive;
+		// font-family: 'Press Start 2P', cursive;
+		font-family: 'Bungee Shade', cursive;
+		font-size: xx-large;
+	};
+	#wishName{
+		font-weight: bold;
+		// font-family: 'Monoton', cursive;
+		font-family: 'Londrina Shadow', cursive;
+		font-size: xxx-large;
+	}
+}
+
+#errorContainer{
+	text-align: center;
+	padding-top: 50px;
+	font-family: 'Staatliches', cursive;
+	color: tomato;
+	#error{
+		// font-family: 'Poiret One', cursive;
+		font-size: 50px;
+	};
+	#wishName{
+		font-weight: bold;
+		font-family: 'Monoton', cursive;
+		font-size: xxx-large;
+	}
+}	
+#bibleReference{
+	text-align: end;
 }

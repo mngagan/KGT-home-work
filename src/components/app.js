@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
 import AllDates from './allDates'
 import { toast, ToastContainer } from 'react-toastify';
-import { FaBrush } from "react-icons/fa";
+import { FaBrush, FaBirthdayCake, FaBible } from "react-icons/fa";
 import ParticlesBg from 'particles-bg'
 
 import { RiAdminFill } from "react-icons/ri";
@@ -22,6 +22,8 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import BirthdayIndex from './birthday'
+import AddBirthday from './birthday/addBirthday'
 const customStyles = {
     content: {
         top: '50%',
@@ -119,41 +121,38 @@ export default function App() {
         <Provider store={store}>
             <ThemeProvider theme={theme(mode)}>
                 <Router>
-                    <div>
-                        <ul>
-                            <li>
-                                <Link to="/">Home</Link>
-                            </li>
-                            <li>
-                                <Link to="/about">About</Link>
-                            </li>
-                            <li>
-                                <Link to="/dashboard">Dashboard</Link>
-                            </li>
-                        </ul>
-
-                        <hr />
-                        <Switch>
-                            <Route exact path="/">
-                                <h2>Home</h2>
-                            </Route>
-                            <Route path="/about">
-                                <h2>about</h2>
-                            </Route>
-                            <Route path="/dashboard">
-                                <h2>dashboard</h2>
-                            </Route>
-                        </Switch>
-                    </div>
+                    <a href="#" className="bibleIcon" >
+                        <Link to="/">
+                            <FaBible style={{ color: theme(mode).text }} />
+                        </Link>
+                    </a>
+                    <a href="#" className="bdayIcon" >
+                        <Link to="/birthday">
+                            <FaBirthdayCake style={{ color: theme(mode).text }} />
+                        </Link>
+                    </a>
+                    <a href="#" className="float-right" onClick={() => leftButtonClick()} >
+                        <RiAdminFill style={{ color: theme(mode).text }} />
+                    </a>
+                    <a href="#" className="float" onClick={() => handleChangeMode()} >
+                        <FaBrush style={{ color: theme(mode).text }} />
+                    </a>
+                    <Switch>
+                        <Route exact path="/">
+                            {page === 'view' && <sc.div style={{ height: '100vh' }}><ViewHW /></sc.div>}
+                            {page === 'add' && <sc.div style={{ height: '100vh' }}><AddHW /></sc.div>}
+                        </Route>
+                        <Route path='/birthday/add'>
+                            <AddBirthday />
+                        </Route>
+                        <Route path="/birthday">
+                            <BirthdayIndex />
+                        </Route>
+                        <Route path="/dashboard">
+                            <h2>dashboard</h2>
+                        </Route>
+                    </Switch>
                 </Router>
-                <a href="#" class="float" onClick={() => handleChangeMode()} >
-                    <FaBrush style={{ color: theme(mode).text }} />
-                </a>
-                <a href="#" class="float-right" onClick={() => leftButtonClick()} >
-                    <RiAdminFill style={{ color: theme(mode).text }} />
-                </a>
-                {page === 'view' && <sc.div style={{ height: '100vh' }}><ViewHW /></sc.div>}
-                {page === 'add' && <sc.div style={{ height: '100vh' }}><AddHW /></sc.div>}
                 <Modal
                     isOpen={modalIsOpen}
                     onAfterOpen={afterOpenModal}
@@ -183,7 +182,7 @@ export default function App() {
                     draggable
                     pauseOnHover
                 />
-                <ParticlesBg type="custom" config={config} bg={true} />
+                {/* <ParticlesBg type="custom" config={config} bg={true} /> */}
             </ThemeProvider>
         </Provider>
     )

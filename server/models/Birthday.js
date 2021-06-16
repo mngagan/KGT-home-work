@@ -5,13 +5,29 @@ const BirthdaySchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    date : {
+    name : {
         type : String,
         required : false,
     },
     uniqueId : {
         type : String,
         required : true
+    },
+    images : {
+        type : Array,
+        required : false
+    },
+    date : {
+        type : Date,
+        required : false
+    },
+    month : {
+        type : Number,
+        required : false
+    },
+    day : {
+        type : Number,
+        required : false
     }
 })
 

@@ -13,8 +13,8 @@ const buildPath = path.join(__dirname, '..', 'build');
 app.use(express.static(buildPath));
 // app.use(express.json({extended : false}))
 // app.use(express.bodyParser({limit: '2mb'}))
-app.use(bodyParser.json({ limit: "50mb" }))
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
+app.use(bodyParser.json({ limit: "100mb" }))
+app.use(bodyParser.urlencoded({ limit: "100mb", extended: true, parameterLimit: 50000 }))
 
 // app.get('/', (req, res) => {
 //     res.send('API RUNNING')
@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 5
 // Define routes
 app.use('/api/users', require('./routes/api/users'))
 app.use('/api/homeWork', require('./routes/api/homeWork'))
+app.use('/api/birthday', require('./routes/api/birthday'))
 // app.use('/api/profile', require('./routes/api/profile'))
 // app.use('/api/posts', require('./routes/api/posts'))
 app.get('*', (req,res) =>{
