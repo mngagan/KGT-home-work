@@ -6,6 +6,9 @@ import ImageUploading from "react-images-uploading";
 import Axios from 'axios'
 import { toastMsg } from '../toastMsg';
 
+import { theme } from '../../styledComponents/theme'
+const themeTemp = theme(localStorage.getItem('my-mode'))
+
 
 
 const AddBirthday = () => {
@@ -22,11 +25,13 @@ const AddBirthday = () => {
     const handleBirthdayUpload = async () => {
         if (isUploading) {
             toastMsg({ warning: true, msg: 'Your request is in progress. Please wait' })
+            return
         }
-        // setIsUploading(true)
+        setIsUploading(true)
+        // return
         let imageData = images.map(i => i.data_url)
         try {
-            let body = { date, name,  images : imageData}
+            let body = { date, name, images: imageData }
             const res = await Axios.post('/api/birthday/add', body)
             if (res.data.success) {
                 toastMsg({ success: true, msg: 'Added succesfully' })
@@ -89,7 +94,7 @@ const AddBirthday = () => {
     return (
         <sc.div style={{ height: '100vh' }}>
             <sc.div className='container-fluid' style={{ paddingTop: '50px' }}>
-                <sc.div className='row'>
+                {!!!isUploading && <React.Fragment><sc.div className='row'>
                     <sc.div className='col-3 col-sm-3 col-md-2 col-lg-2'>
                         Name
                     </sc.div>
@@ -113,9 +118,33 @@ const AddBirthday = () => {
                         {imageUploadUtil()}
                     </sc.div>
                 </sc.div>
-                <sc.div className = 'col-12 col-sm-12 col-md-12 col-lg-12'>
-                    <sc.button style = {{float : 'right'}} onClick = {() => {handleBirthdayUpload()}} >Upload</sc.button>
-                </sc.div>
+                    <sc.div className='col-12 col-sm-12 col-md-12 col-lg-12'>
+                        <sc.button style={{ float: 'right' }} onClick={() => { handleBirthdayUpload() }} >Upload</sc.button>
+                    </sc.div>
+                </React.Fragment>}
+                {!!isUploading && <sc.div className='container'>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 100 100"
+                        width="300" height="300"
+                        style={{ "marginLeft": "auto", "marginRight": "auto", "display": "block" }}
+                    >
+                        <path
+                            fill={themeTemp.text}
+                            stroke={themeTemp.text}
+                            d="M73 50c0-12.7-10.3-23-23-23S27 37.3 27 50m3.9 0c0-10.5 8.5-19.1 19.1-19.1S69.1 39.5 69.1 50"
+                        >
+                            <animateTransform
+                                attributeName="transform"
+                                attributeType="XML"
+                                type="rotate"
+                                dur="1s"
+                                from="0 50 50"
+                                to="360 50 50"
+                                repeatCount="indefinite"
+                            />
+                        </path>
+                    </svg>
+                </sc.div>}
             </sc.div>
         </sc.div>
     )
