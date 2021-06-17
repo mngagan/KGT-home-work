@@ -5,6 +5,17 @@
 	}
 }
 
+@media all and (max-width: 500px) {
+	#wishContainer{
+		#wishHead{
+			font-size: 30px;
+		};
+		#wishName{
+			font-size: 40px;
+		}
+	}
+}
+
 // html{
 //   transition : background-color  2s, color 2s;
 // }
@@ -124,7 +135,7 @@ a {
 		// font-family: 'Poiret One', cursive;
 		// font-family: 'Press Start 2P', cursive;
 		font-family: 'Bungee Shade', cursive;
-		font-size: xx-large;
+		font-size: xxx-large;
 	};
 	#wishName{
 		font-weight: bold;

@@ -15,9 +15,14 @@ const timeoutTimes = {
 }
 let data = []
 const toTitleCase = (str) => {
-    return str.replace(/\w\S*/g, function (txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
+    try{
+        return str.replace(/\w\S*/g, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+    }
+    catch(e){
+        return str
+    }
 }
 let personInterval, imageInterval, tempBirthdayData
 const BirthdayIndex = (props) => {
@@ -147,7 +152,7 @@ const BirthdayIndex = (props) => {
                     <sc.div className='col-12 col-sm-12 col-md-12 col-lg-12 nopad' id="wishName">{toTitleCase(name)}</sc.div>
                 </sc.div>
             )
-        }
+        } 
     }
     const imagesCount = () => {
         return birthdayData && birthdayData.images && birthdayData.images.length ? birthdayData.images.length : 0
@@ -179,7 +184,7 @@ const BirthdayIndex = (props) => {
             </sc.div>}
             {!!!isLoading && !!!error.length && <sc.div className='container-fluid' style={{ paddingTop: '50px' }}>
                 <sc.div className="row" >
-                    {!!imagesCount() && <sc.div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                    {!!imagesCount() && data.length && <sc.div className='col-12 col-sm-12 col-md-6 col-lg-6'>
                         <sc.div>
                             <sc.div style={{ maxHeight: '50%' }}>
                                 {imageUtil({ images: birthdayData?.images ? birthdayData.images : [] })}
@@ -195,11 +200,14 @@ const BirthdayIndex = (props) => {
                             {getBibleVerse()}
                         </sc.div>
                     </sc.div>
+                    {!(!!imagesCount() && data.length) && <sc.div className="col-12 col-sm-12 col-md-12 col-lg-12" style={{ textAlign: 'center' }}>
+                            <sc.div>No birthdays today</sc.div>
+                        </sc.div>}
                     <sc.div className="col-12 col-sm-12 col-md-12 col-lg-12" style={{ textAlign: 'center' }}>
-                        <sc.button style={{ float: 'left' }} onClick={() => changePerson({ prev: true })}>Prev</sc.button>
-                        <sc.button style={{ float: 'right' }} onClick={() => changePerson({ next: true })}>Next</sc.button>
+                        {data?.length >1 && <sc.button style={{ float: 'left' }} onClick={() => changePerson({ prev: true })}>Prev</sc.button>}
+                        {data?.length >1 && <sc.button style={{ float: 'right' }} onClick={() => changePerson({ next: true })}>Next</sc.button>}
                         <sc.button style={{}} onClick={() => props.history.push('/birthday/add')}>
-                            Add yours!!
+                            Add yours
                         </sc.button>
                     </sc.div>
                 </sc.div>
